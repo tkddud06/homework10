@@ -65,6 +65,7 @@ int main()
 		printf(" Recursive Inorder    = r      Iterative Inorder (Stack)    = t \n");
 		printf(" Level Order (Queue)  = l      Quit                         = q \n");
 		printf("----------------------------------------------------------------\n");
+		printf("[--------------  [최상영]  	[2022041062]  --------------]\n");
 
 		printf("Command = ");
 		scanf(" %c", &command);
@@ -149,7 +150,7 @@ void iterativeInorder(Node* node)
 		if (ptr == NULL) // 만약 리프 노드에 도달한 경우 (왼쪽이든, 오른쪽이든)
 		{
 			ptr = pop(); // 왼쪽 리프 노드에 도달한 경우, 다시 부모 노드로 올라간다. ( 만약 오른쪽 리프 노드에 도달하여 이 if문에 들어온 경우, 부모의 부모 노드로 바로 올라가게 된다.)
-			printf("[%d]  ", ptr->key); // 해당 노드를 탐색하고, ( 중위순회기 때문에, 이 순서대로임)
+			printf(" [%d] ", ptr->key); // 해당 노드를 탐색하고, ( 중위순회기 때문에, 이 순서대로임)
 			ptr = ptr->right; // 그 부모 노드의 오른쪽 노드로 내려간다.
 			continue; // 기존 과정을 반복하여, 중위순회를 진행한다.
 		}
@@ -171,7 +172,7 @@ void levelOrder(Node* ptr)
 
 	do
 	{
-		printf("[%d]  ", node->key); // 해당 노드를 탐색한 뒤,
+		printf(" [%d] ", node->key); // 해당 노드를 탐색한 뒤,
 		if(node->left != NULL) enQueue(node->left); // 해당 노드의 왼쪽 노드와
 		if (node->right != NULL) enQueue(node->right); // 해당 노드의 오른쪽 노드를 큐에 순서대로 쌓는다
 		node = deQueue(); // 순서대로 큐에서 꺼내와 탐색한다. 그렇게 되면, 레벨 순서대로 왼쪽에서 오른쪽으로 탐색할 수 있다.
@@ -226,8 +227,15 @@ int insert(Node* head, int key)
 int deleteNode(Node* head, int key)
 {
 
+	if(head == NULL) // 초기화 자체가 안된 경우라면
+	{
+		printf("\n Nothing to delete!!\n");
+		return -1;
+	}
+
 	if (head->left == NULL) // 빈 트리라면
 	{
+		printf("\n Nothing to delete!!\n");
 		return -1;
 	}
 
@@ -383,7 +391,7 @@ int deleteNode(Node* head, int key)
 		}
 	}
 
-	printf("탐색 실패");
+	printf("No node for key [%d]\n", key);
 	return -1;
 }
 
@@ -420,7 +428,7 @@ Node* pop()
 {
 	if (top == -1) // 원소는 0번 인덱스부터 들어가므로, top이 -1일 때는 빈 상태
 	{
-		printf("스택 빔");
+		// printf("stack is empty\n");
 		return NULL;
 	}
 	// 비어있지 않다면, 탑의 원소를 temp에 저장한 뒤, top은 아래 원소를 가르키게 하고, temp 리턴
@@ -433,7 +441,7 @@ void push(Node* aNode)
 {
 	if (top + 1 == 20) // 스택은 20개의 원소를 저장 가능하므로, 인덱스상 19번까지 사용할 수 있다. 그러므로, 다음 원소를 저장할 공간이 19번을 넘어선, 20번인 경우가 꽉 찬 경우다
 	{
-		printf("스택 꽉 참");
+		printf("stack is full\n");
 		return;
 	}
 	// 꽉 차지 않았다면, 다음 인덱스에 새로운 원소를 넣는다
@@ -447,7 +455,7 @@ Node* deQueue()
 {
 	if (front == rear) // front와 rear가 일치하는, 즉 모든 원소를 뽑아냈거나, front == -1 && rear == -1인 상태
 	{
-		// printf("큐 빔");
+		// printf("queue is empty\n");
 		return NULL;
 	}
 	// 그렇지 않으면
@@ -461,7 +469,7 @@ void enQueue(Node* aNode)
 {
 	if ((rear + 1) % MAX_QUEUE_SIZE == front) // 큐가 꽉 차서, 바로 다음 인덱스가 첫번째 원소(즉, front)가 되면 강제 리턴
 	{
-		printf("큐 꽉 참");
+		printf("queue is full\n");
 		return;
 	}
 	rear = (rear + 1) % MAX_QUEUE_SIZE; // 그렇지 않는 경우는 rear는 뒤로 이동하고,
